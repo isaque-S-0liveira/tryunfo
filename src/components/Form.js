@@ -24,6 +24,7 @@ class Form extends React.Component {
           <br />
           <input
             data-testid="name-input"
+            name="cardName"
             type="text"
             id="Nome-Da-Carta"
             value={ cardName }
@@ -36,6 +37,7 @@ class Form extends React.Component {
           <br />
           <textarea
             data-testid="description-input"
+            name="cardDescription"
             id="descrição"
             value={ cardDescription }
             onChange={ onInputChange }
@@ -47,6 +49,7 @@ class Form extends React.Component {
           <input
             data-testid="attr1-input"
             type="number"
+            name="cardAttr1"
             id="atributo-life"
             value={ cardAttr1 }
             onChange={ onInputChange }
@@ -58,6 +61,7 @@ class Form extends React.Component {
           <input
             data-testid="attr2-input"
             type="number"
+            name="cardAttr2"
             id="atributo-strength"
             value={ cardAttr2 }
             onChange={ onInputChange }
@@ -69,6 +73,7 @@ class Form extends React.Component {
           <input
             data-testid="attr3-input"
             type="number"
+            name="cardAttr3"
             id="atributo-defense"
             value={ cardAttr3 }
             onChange={ onInputChange }
@@ -76,14 +81,15 @@ class Form extends React.Component {
         </label>
         <br />
         <label htmlFor="imagem">
-          Adicione a URL de uma imagem
+          Img
           <input
             data-testid="image-input"
             type="text"
+            name="cardImage"
             value={ cardImage }
             onChange={ onInputChange }
           />
-          <button type="button">image</button>
+          <button type="button">Procurar</button>
         </label>
         <br />
         <label htmlFor="raridade">
@@ -91,6 +97,7 @@ class Form extends React.Component {
           <select
             data-testid="rare-input"
             id="raridade"
+            name="cardRare"
             value={ cardRare }
             onChange={ onInputChange }
           >
