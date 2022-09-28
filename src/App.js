@@ -13,18 +13,52 @@ class App extends React.Component {
       cardAttr3: '',
       cardImage: '',
       cardRare: '',
-      cardTrunfo: true,
-      isSaveButtonDisabled: false,
+      cardTrunfo: false,
+      isSaveButtonDisabled: true,
     };
   }
 
+  validacaoDoBotao = () => {
+    const {
+      cardName,
+      cardDescription,
+      cardAttr1,
+      cardAttr2,
+      cardAttr3,
+      cardImage,
+    } = this.state;
+    const arrNum = [cardAttr1, cardAttr2, cardAttr3].map(Number);
+    const arrText = [cardName, cardDescription, cardImage];
+    const nov = 90;
+    const duze = 210;
+    const noNegative = arrNum.every((atr) => atr >= 0 && atr <= nov);
+    const quantidadeEsperada = arrNum.reduce((vlA, curr) => vlA + curr, 0) <= duze;
+
+    const temTexto = arrText.every((text) => text.length >= 1);
+    if (temTexto && quantidadeEsperada && noNegative) {
+      this.setState({
+        isSaveButtonDisabled: false,
+      });
+    } else {
+      this.setState({
+        isSaveButtonDisabled: true,
+      });
+    }
+  };
+
   onInputChange = (event) => {
-    console.log(event.target.checked);
-    const { name, value, type, checked } = event.target;
-    const checkOrValue = type === 'checkbox' ? checked : value;
-    this.setState({
-      [name]: checkOrValue,
-    });
+    const { cardTrunfo } = this.state;
+    const { name, value, type } = event.target;
+    if (type === 'checkbox' && cardTrunfo === false) {
+      this.setState({
+        cardTrunfo: true,
+      });
+    } else {
+      this.setState({
+        [name]: value,
+        cardTrunfo: false,
+      }, this.validacaoDoBotao);
+    }
   };
 
   render() {
@@ -53,7 +87,7 @@ class App extends React.Component {
           cardRare={ cardRare }
           cardTrunfo={ cardTrunfo }
           isSaveButtonDisabled={ isSaveButtonDisabled }
-          onSaveButtonClick={ () => {} }
+          onSaveButtonClick={ this.onSaveButtonClick }
 
         />
         <Card
