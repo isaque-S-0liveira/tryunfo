@@ -12,10 +12,11 @@ class App extends React.Component {
       cardAttr2: '0',
       cardAttr3: '0',
       cardImage: '',
-      cardRare: '',
+      cardRare: 'normal',
       cardTrunfo: false,
+      hasTrunfo: false,
       isSaveButtonDisabled: true,
-      // cartasSalvas: '',
+      cartasSalvas: [],
     };
   }
 
@@ -55,48 +56,64 @@ class App extends React.Component {
         cardTrunfo: true,
       });
     } else {
-      this.setState({
-        [name]: value,
-        cardTrunfo: false,
-      }, this.validacaoDoBotao);
+      this.setState(
+        {
+          [name]: value,
+          cardTrunfo: false,
+        },
+        this.validacaoDoBotao,
+      );
     }
   };
 
-  onSaveButtonClick = () => {
-    // const {
-    //   cardName,
-    //   cardDescription,
-    //   cardImage,
-    //   cardAttr1,
-    //   cardAttr2,
-    //   cardAttr3,
-    //   cardRare,
-    //   cardTrunfo,
-    // } = this.state;
-    // const inf = [{
-    //   cardName,
-    //   cardDescription,
-    //   cardImage,
-    //   cardAttr1,
-    //   cardAttr2,
-    //   cardAttr3,
-    //   cardRare,
-    //   cardTrunfo,
-    // }];
-  //  this.setState({
-  //   cartasSalvas: inf,
-  //  })
+  superTrunfo = () => {
+    const { cartasSalvas } = this.state;
     this.setState({
-      cardName: '',
-      cardDescription: '',
-      cardAttr1: '0',
-      cardAttr2: '0',
-      cardAttr3: '0',
-      cardImage: '',
-      cardRare: '',
-      cardTrunfo: false,
-      isSaveButtonDisabled: true,
+      hasTrunfo: cartasSalvas.some((sp) => sp.cardTrunfo === true),
     });
+  };
+
+  onSaveButtonClick = () => {
+    const {
+      cardName,
+      cardDescription,
+      cardImage,
+      cardAttr1,
+      cardAttr2,
+      cardAttr3,
+      cardRare,
+      cardTrunfo,
+    } = this.state;
+    const inf = [
+      {
+        cardName,
+        cardDescription,
+        cardImage,
+        cardAttr1,
+        cardAttr2,
+        cardAttr3,
+        cardRare,
+        cardTrunfo,
+      },
+    ];
+    this.setState({
+      cartasSalvas: inf,
+    });
+
+    this.setState(
+      {
+        cardName: '',
+        cardDescription: '',
+        cardAttr1: '0',
+        cardAttr2: '0',
+        cardAttr3: '0',
+        cardImage: '',
+        cardRare: '',
+        cardTrunfo: false,
+        isSaveButtonDisabled: true,
+      },
+      this.superTrunfo,
+    );
   };
 
   render() {
@@ -109,6 +126,7 @@ class App extends React.Component {
       cardImage,
       cardRare,
       cardTrunfo,
+      hasTrunfo,
       isSaveButtonDisabled,
     } = this.state;
     return (
@@ -124,9 +142,9 @@ class App extends React.Component {
           cardImage={ cardImage }
           cardRare={ cardRare }
           cardTrunfo={ cardTrunfo }
+          hasTrunfo={ hasTrunfo }
           isSaveButtonDisabled={ isSaveButtonDisabled }
           onSaveButtonClick={ this.onSaveButtonClick }
-
         />
         <Card
           cardName={ cardName }
